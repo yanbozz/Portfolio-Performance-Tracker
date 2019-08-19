@@ -11,16 +11,19 @@ import inspect
 
 style.use('ggplot')
 
+
 def correl(type='data'):
 
-    if os.path.exists(root_path + '/Daily Data/Portfolio/Portfolio Returns.csv') and os.path.exists(root_path + '/Daily Data/Portfolio/Portfolio Daily Prices.csv'):
+    if os.path.exists(root_path + '/Daily-Data/Portfolio/Portfolio Returns.csv') and os.path.exists(root_path + '/Daily-Data/Portfolio/Portfolio Daily Prices.csv'):
         type = type.lower()
         if type == "returns":
-            pdata = pd.read_csv(root_path+'/Daily Data/Portfolio/Portfolio Returns.csv' ,index_col=0)
+            pdata = pd.read_csv(
+                root_path+'/Daily-Data/Portfolio/Portfolio Returns.csv', index_col=0)
             n = len(pdata.columns) - 1
-            pdata = pdata.iloc[:,0:n]
+            pdata = pdata.iloc[:, 0:n]
         else:
-            pdata = pd.read_csv(root_path+'/Daily Data/Portfolio/Portfolio Daily Prices.csv' ,index_col=0)
+            pdata = pd.read_csv(
+                root_path+'/Daily-Data/Portfolio/Portfolio Daily Prices.csv', index_col=0)
 
         cor = pdata.corr()
         data = cor.values
@@ -51,11 +54,13 @@ def correl(type='data'):
             plt.show()
 
     else:
-        print 'You have not downloaded data for your portfolio yet in oder for the optimization module to be run. Please download the data by running the following function --- port_data.portfolio_daily_data()'
+        print('You have not downloaded data for your portfolio yet in oder for the optimization module to be run. Please download the data by running the following function --- port_data.portfolio_daily_data()')
+
 
 def risk_return():
-    if os.path.exists(root_path + '/Daily Data/Portfolio/Portfolio Returns.csv'):
-        port_rets = pd.read_csv(root_path + '/Daily Data/Portfolio/Portfolio Returns.csv', index_col=0)
+    if os.path.exists(root_path + '/Daily-Data/Portfolio/Portfolio Returns.csv'):
+        port_rets = pd.read_csv(
+            root_path + '/Daily-Data/Portfolio/Portfolio Returns.csv', index_col=0)
         x = (port_rets.std() * np.sqrt(252)) * 100
         x = x[:-1]
         y = (port_rets.mean() * 252) * 100
@@ -81,11 +86,12 @@ def risk_return():
         plt.yticks(fontsize=8)
         plt.show()
     else:
-        print 'You have not downloaded data for your portfolio yet in oder for the optimization module to be run. Please download the data by running the following function --- port_data.portfolio_daily_data()'
+        print('You have not downloaded data for your portfolio yet in oder for the optimization module to be run. Please download the data by running the following function --- port_data.portfolio_daily_data()')
+
 
 def violin(group=0):
-    if os.path.exists(root_path + '/Daily Data/Portfolio/Portfolio Returns.csv'):
-        port_rets = pd.read_csv(root_path + '/Daily Data/Portfolio/Portfolio Returns.csv')
+    if os.path.exists(root_path + '/Daily-Data/Portfolio/Portfolio Returns.csv'):
+        port_rets = pd.read_csv(root_path + '/Daily-Data/Portfolio/Portfolio Returns.csv')
         port_rets['month'] = pd.DatetimeIndex(port_rets['Date']).month
         port_rets['day'] = pd.DatetimeIndex(port_rets['Date']).weekday_name
         port_rets['month'] = port_rets['month'].apply(lambda x: calendar.month_abbr[x])
@@ -97,7 +103,7 @@ def violin(group=0):
             title = "Monthly Returns"
             ax = sns.violinplot(x="month", y="Portfolio Value", data=port_rets, palette="Pastel1")
 
-        #Modify x axis labels
+        # Modify x axis labels
         vals = ax.get_yticks()
         ax.set_yticklabels(['{:.2f}%'.format(x * 100) for x in vals])
         ax.set_xlabel('')
@@ -105,11 +111,12 @@ def violin(group=0):
         plt.suptitle(title)
         plt.show()
     else:
-        print 'You have not downloaded data for your portfolio yet in oder for the optimization module to be run. Please download the data by running the following function --- port_data.portfolio_daily_data()'
+        print('You have not downloaded data for your portfolio yet in oder for the optimization module to be run. Please download the data by running the following function --- port_data.portfolio_daily_data()')
+
 
 def box_plot(group=0):
-    if os.path.exists(root_path + '/Daily Data/Portfolio/Portfolio Returns.csv'):
-        port_rets = pd.read_csv(root_path + '/Daily Data/Portfolio/Portfolio Returns.csv')
+    if os.path.exists(root_path + '/Daily-Data/Portfolio/Portfolio Returns.csv'):
+        port_rets = pd.read_csv(root_path + '/Daily-Data/Portfolio/Portfolio Returns.csv')
         port_rets['month'] = pd.DatetimeIndex(port_rets['Date']).month
         port_rets['day'] = pd.DatetimeIndex(port_rets['Date']).weekday_name
         port_rets['month'] = port_rets['month'].apply(lambda x: calendar.month_abbr[x])
@@ -124,7 +131,7 @@ def box_plot(group=0):
             ax = sns.boxplot(x="month", y="Portfolio Value", data=port_rets, palette="Pastel1")
             ax = sns.swarmplot(x="month", y="Portfolio Value", data=port_rets, color="grey")
 
-        #Modify x axis labels
+        # Modify x axis labels
         vals = ax.get_yticks()
         ax.set_yticklabels(['{:.2f}%'.format(x * 100) for x in vals])
         ax.set_xlabel('')
@@ -132,13 +139,15 @@ def box_plot(group=0):
         plt.suptitle(title)
         plt.show()
     else:
-        print 'You have not downloaded data for your portfolio yet in oder for the optimization module to be run. Please download the data by running the following function --- port_data.portfolio_daily_data()'
+        print('You have not downloaded data for your portfolio yet in oder for the optimization module to be run. Please download the data by running the following function --- port_data.portfolio_daily_data()')
+
 
 def calmap():
-    if os.path.exists(root_path + '/Daily Data/Portfolio/Portfolio Returns.csv'):
-        port_rets = pd.read_csv(root_path + '/Daily Data/Portfolio/Portfolio Returns.csv',index_col=0)
+    if os.path.exists(root_path + '/Daily-Data/Portfolio/Portfolio Returns.csv'):
+        port_rets = pd.read_csv(
+            root_path + '/Daily-Data/Portfolio/Portfolio Returns.csv', index_col=0)
 
-        import numpy as np;
+        import numpy as np
         np.random.seed(sum(map(ord, 'calmap')))
         import calmap
 
@@ -153,11 +162,13 @@ def calmap():
                             fig_kws=dict(figsize=(8, 4)))
         plt.show()
     else:
-        print 'You have not downloaded data for your portfolio yet in oder for the optimization module to be run. Please download the data by running the following function --- port_data.portfolio_daily_data()'
+        print('You have not downloaded data for your portfolio yet in oder for the optimization module to be run. Please download the data by running the following function --- port_data.portfolio_daily_data()')
+
 
 def weights_plot():
-    if os.path.exists(root_path + '/Daily Data/Portfolio/Portfolio Weights.csv'):
-        port_weights = pd.read_csv(root_path + '/Daily Data/Portfolio/Portfolio Weights.csv',index_col=0)
+    if os.path.exists(root_path + '/Daily-Data/Portfolio/Portfolio Weights.csv'):
+        port_weights = pd.read_csv(
+            root_path + '/Daily-Data/Portfolio/Portfolio Weights.csv', index_col=0)
 
         plt.pie(
             port_weights["Weight"],
@@ -172,4 +183,4 @@ def weights_plot():
         plt.show()
 
     else:
-        print 'You have not downloaded data for your portfolio yet in oder for the optimization module to be run. Please download the data by running the following function --- port_data.portfolio_daily_data()'
+        print('You have not downloaded data for your portfolio yet in oder for the optimization module to be run. Please download the data by running the following function --- port_data.portfolio_daily_data()')
